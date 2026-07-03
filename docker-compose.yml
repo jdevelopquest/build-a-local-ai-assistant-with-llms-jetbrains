@@ -22,7 +22,7 @@ services:
       - RAG_CHUNK_OVERLAP=${RAG_CHUNK_OVERLAP:-50}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     volumes:
-      - ./api:/app/api
+      - ./api:/app/api:Z
     depends_on:
       qdrant:
         condition: service_started
@@ -44,7 +44,7 @@ services:
     ports:
       - "${QDRANT_EXTERNAL_PORT:-6334}:6333"
     volumes:
-      - ./data/qdrant:/qdrant/storage
+      - ./data/qdrant:/qdrant/storage:Z
     environment:
       - QDRANT__SERVICE__GRPC_PORT=6334
     networks:
@@ -57,7 +57,7 @@ services:
     ports:
       - "${OLLAMA_EXTERNAL_PORT:-11435}:11434"
     volumes:
-      - ./data/ollama:/root/.ollama
+      - ./data/ollama:/root/.ollama:Z
     networks:
       - ai-auto-network
     restart: unless-stopped
