@@ -1,3 +1,7 @@
+CONTAINER_CLI ?= docker
+
+-include variables.mk
+
 .PHONY: help build up down restart logs logs-api logs-qdrant logs-ollama shell test clean ollama-pull ollama-list
 
 help:
@@ -17,40 +21,40 @@ help:
 	@echo "  make clean       - Stop services and remove volumes"
 
 build:
-	docker compose build
+	$(CONTAINER_CLI) compose build
 
 up:
-	docker compose up -d
+	$(CONTAINER_CLI) compose up -d
 
 down:
-	docker compose down
+	$(CONTAINER_CLI) compose down
 
 restart:
-	docker compose restart
+	$(CONTAINER_CLI) compose restart
 
 logs:
-	docker compose logs -f
+	$(CONTAINER_CLI) compose logs -f
 
 logs-api:
-	docker compose logs -f api
+	$(CONTAINER_CLI) compose logs -f api
 
 logs-qdrant:
-	docker compose logs -f qdrant
+	$(CONTAINER_CLI) compose logs -f qdrant
 
 logs-ollama:
-	docker compose logs -f ollama
+	$(CONTAINER_CLI) compose logs -f ollama
 
 shell:
-	docker compose exec api bash
+	$(CONTAINER_CLI) compose exec api bash
 
 test:
-	docker compose exec api pytest
+	$(CONTAINER_CLI) compose exec api pytest
 
 ollama-pull:
-	docker compose exec ollama ollama pull llama3.1:8b
+	$(CONTAINER_CLI) compose exec ollama ollama pull llama3.1:8b
 
 ollama-list:
-	docker compose exec ollama ollama list
+	$(CONTAINER_CLI) compose exec ollama ollama list
 
 clean:
-	docker compose down -v
+	$(CONTAINER_CLI) compose down -v
